@@ -1,3 +1,5 @@
+# Class Lock for part 1
+"""
 class Lock:
     INITIAL_POS = 50
     MAX_POS = 99
@@ -24,13 +26,39 @@ class Lock:
         
         self.position = position - 1
         return self.position
+"""
+
+# Class Lock for part 2
+class Lock:
+    INITIAL_POS = 50
+    MAX_POS = 99
+
+    def __init__(self):
+        self.position = 50
+        self.number_of_zeros = 0
+
+    def rotate(self, rotation):
+        direction = rotation[0]
+        distance = int(rotation[1:])
+
+        if direction == 'L':
+            for i in range(distance):
+                self.position -= 1
+                if self.position == 0:
+                    self.number_of_zeros += 1
+                elif self.position < 0:
+                    self.position = Lock.MAX_POS
+        else:
+            for i in range(distance):
+                self.position += 1
+                if self.position > Lock.MAX_POS:
+                    self.position = 0
+                    self.number_of_zeros += 1
 
 lock = Lock()
 
-number_of_zeros = 0
 with open('input.txt', 'r') as input_file:
     for rotation in input_file:
-        if lock.rotate(rotation) == 0:
-            number_of_zeros += 1
+        lock.rotate(rotation)
 
-print('Result: ', number_of_zeros)
+print('Result: ', lock.number_of_zeros)
