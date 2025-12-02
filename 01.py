@@ -27,6 +27,10 @@ class Lock:
 
 lock = Lock()
 
+number_of_zeros = 0
 with open('input.txt', 'r') as input_file:
     for rotation in input_file:
-        print(lock.rotate(rotation))
+        if lock.rotate(rotation) == 0:
+            number_of_zeros += 1
+
+print('Result: ', number_of_zeros)
