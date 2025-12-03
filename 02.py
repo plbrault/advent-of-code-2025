@@ -18,7 +18,8 @@ def is_invalid(id, max_repeats=float('inf')):
         quotient = num_digits / divisor
         if quotient.is_integer():
             parts = textwrap.wrap(id, int(num_digits / divisor))
-            return (len(set(parts)) == 1 and len(parts) <= max_repeats)
+            if (len(set(parts)) == 1 and len(parts) <= max_repeats):
+                return True
     return False
 
 ranges = parse_file('input.txt')
