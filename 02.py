@@ -12,17 +12,20 @@ def get_individual_ids(ranges):
             ids.append(str(i))
     return ids
 
-def is_invalid(id):
+def is_invalid(id, max_repeats=float('inf')):
     num_digits = len(id)
     for divisor in range(2, num_digits + 1):
         quotient = num_digits / divisor
-        if (num_digits / divisor).is_integer():
+        if quotient.is_integer():
             parts = textwrap.wrap(id, int(num_digits / divisor))
-            return (len(set(parts)) == 1 and len(parts) == 2)
+            return (len(set(parts)) == 1 and len(parts) <= max_repeats)
     return False
 
 ranges = parse_file('input.txt')
 ids = get_individual_ids(ranges)
 
-sum = sum([int(id) for id in ids if is_invalid(id)])
-print('Result:', sum)
+part1_result = sum([int(id) for id in ids if is_invalid(id, 2)])
+print('Result for part 1:', part1_result)
+
+part2_result = sum([int(id) for id in ids if is_invalid(id)])
+print('Result for part 2:', part2_result)
