@@ -9,6 +9,10 @@ def parse_file(filename):
             banks.append(bank)
     return banks
 
+def find_first_battery(bank):
+    return max(bank[:-1])
+
 banks = parse_file('input.txt')
 
-print(banks)
+for bank in banks:
+    print(find_first_battery(bank))
