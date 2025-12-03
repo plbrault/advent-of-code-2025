@@ -1,3 +1,4 @@
+from datetime import datetime
 import textwrap
 
 def parse_file(filename):
@@ -25,8 +26,13 @@ def is_invalid(id, max_repeats=float('inf')):
 ranges = parse_file('input.txt')
 ids = get_individual_ids(ranges)
 
+start_time = datetime.now()
+
 part1_result = sum([int(id) for id in ids if is_invalid(id, 2)])
 print('Result for part 1:', part1_result)
 
 part2_result = sum([int(id) for id in ids if is_invalid(id)])
 print('Result for part 2:', part2_result)
+
+end_time = datetime.now()
+print('Completed in', (end_time - start_time).total_seconds(), 'seconds.')
