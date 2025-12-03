@@ -12,20 +12,18 @@ def parse_file(filename):
 banks = parse_file('input.txt')
 
 def solve_part1():
-    def find_first_battery(bank):
-        return max(bank[:-1])
-
-    def find_second_battery(bank, first_battery_id):
-        return max(bank[(first_battery_id + 1):])
-
-    total_joltage = 0
+    joltage = 0
     for bank in banks:
-        first_battery = find_first_battery(bank)
+        first_battery = max(bank[:-1])
         first_battery_id = bank.index(first_battery)
-        second_battery = find_second_battery(bank, first_battery_id)
-        joltage = first_battery * 10 + second_battery
-        total_joltage += joltage
+        second_battery = max(bank[(first_battery_id + 1):])
+        joltage += first_battery * 10 + second_battery
+    print('Result (part 1):', joltage)
 
-    print('Result (part 1):', total_joltage)
+def solve_part2():
+    #for bank in banks:
+    pass
+
 
 solve_part1()
+solve_part2()
