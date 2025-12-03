@@ -18,11 +18,11 @@ def is_invalid(id):
         quotient = num_digits / divisor
         if (num_digits / divisor).is_integer():
             parts = textwrap.wrap(id, int(num_digits / divisor))
-            if (len(set(parts)) == 1):
-                print(parts)
+            return (len(set(parts)) == 1 and len(parts) == 2)
+    return False
 
 ranges = parse_file('input.txt')
 ids = get_individual_ids(ranges)
 
-for id in ids:
-    is_invalid(id)
+sum = sum([int(id) for id in ids if is_invalid(id)])
+print('Result:', sum)
