@@ -24,14 +24,15 @@ def solve_part2():
     NUM_BATTERIES = 12
     for bank in banks:
         next_id = 0
+        joltage = 0
         for num_after in range(NUM_BATTERIES - 1, -1, -1):
             sub_bank = bank[next_id:(-num_after if num_after > 0 else None)]
             if len(sub_bank) == 0:
                 break
             battery = max(sub_bank)
             next_id += sub_bank.index(battery) + 1
-            print(battery, next_id)
-        print('-----')
+            joltage += battery * 10 ** num_after
+        print(joltage)
 
 solve_part1()
 solve_part2()
