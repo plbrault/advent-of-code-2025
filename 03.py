@@ -11,22 +11,12 @@ def parse_file(filename):
 
 banks = parse_file('input.txt')
 
-def solve_part1():
-    joltage = 0
-    for bank in banks:
-        first_battery = max(bank[:-1])
-        first_battery_id = bank.index(first_battery)
-        second_battery = max(bank[(first_battery_id + 1):])
-        joltage += first_battery * 10 + second_battery
-    print('Result (part 1):', joltage)
-
-def solve_part2():
-    NUM_BATTERIES = 12
+def solve(num_batteries):
     total_joltage = 0
     for bank in banks:
         next_id = 0
         joltage = 0
-        for num_after in range(NUM_BATTERIES - 1, -1, -1):
+        for num_after in range(num_batteries - 1, -1, -1):
             sub_bank = bank[next_id:(-num_after if num_after > 0 else None)]
             if len(sub_bank) == 0:
                 break
@@ -34,7 +24,7 @@ def solve_part2():
             next_id += sub_bank.index(battery) + 1
             joltage += battery * 10 ** num_after
         total_joltage += joltage
-    print('Result (part 2):', total_joltage)
+    return total_joltage
 
-solve_part1()
-solve_part2()
+print('Result (part 1):', solve(2))
+print('Result (part 2):', solve(12))
