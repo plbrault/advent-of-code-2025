@@ -22,6 +22,7 @@ def solve_part1():
 
 def solve_part2():
     NUM_BATTERIES = 12
+    total_joltage = 0
     for bank in banks:
         next_id = 0
         joltage = 0
@@ -32,7 +33,8 @@ def solve_part2():
             battery = max(sub_bank)
             next_id += sub_bank.index(battery) + 1
             joltage += battery * 10 ** num_after
-        print(joltage)
+        total_joltage += joltage
+    print('Result (part 2):', total_joltage)
 
 solve_part1()
 solve_part2()
