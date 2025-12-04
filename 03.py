@@ -25,7 +25,7 @@ def solve_part2():
     for bank in banks:
         next_id = 0
         for num_after in range(NUM_BATTERIES - 1, -1, -1):
-            sub_bank = bank[next_id:-num_after]
+            sub_bank = bank[next_id:(-num_after if num_after > 0 else None)]
             if len(sub_bank) == 0:
                 break
             battery = max(sub_bank)
