@@ -54,11 +54,12 @@ def remove_rolls_from(y, x):
     return removed_rolls
 
 def remove_rolls():
+    removed_rolls = 0
     for y, row in enumerate(arr):
         for x, value in enumerate(row):
             if value == ROLL and can_access_roll(y, x):
-                remove_rolls_from(y, x)
+                removed_rolls += remove_rolls_from(y, x)
+    return removed_rolls
 
 print('Result (part 1):', count_accessible_rolls())
-
-remove_rolls()
+print('Result (part 2)', remove_rolls())
