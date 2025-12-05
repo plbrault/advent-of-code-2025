@@ -27,13 +27,7 @@ def in_bounds(y, x):
 def can_access_roll(y, x):
     num_adjacent_rolls = 0
     for (dy, dx) in deltas:
-        if (
-            y + dy >= 0
-            and y + dy < len(arr)
-            and x + dx >= 0
-            and x + dx < len(arr[0])
-            and arr[y + dy][x + dx] == ROLL
-        ):
+        if in_bounds(y + dy, x + dx) and arr[y + dy][x + dx] == ROLL:
             num_adjacent_rolls += 1
             if num_adjacent_rolls == 4:
                 break
