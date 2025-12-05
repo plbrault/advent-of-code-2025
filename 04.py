@@ -10,17 +10,21 @@ arr = parse_file('input.txt')
 ROLL = '@'
 NO_ROLL = '.'
 
+deltas = [
+    (-1, -1),
+    (-1, 0),
+    (-1, 1),
+    (0, -1),
+    (0, 1),
+    (1, -1),
+    (1, 0),
+    (1, 1)
+]
+
+def in_bounds(y, x):
+    return y >= 0 and y < len(arr) and x >= 0 and x < len(arr[0])
+
 def can_access_roll(y, x):
-    deltas = [
-        (-1, -1),
-        (-1, 0),
-        (-1, 1),
-        (0, -1),
-        (0, 1),
-        (1, -1),
-        (1, 0),
-        (1, 1)
-    ]
     num_adjacent_rolls = 0
     for (dy, dx) in deltas:
         if (
@@ -42,5 +46,11 @@ def count_accessible_rolls():
             if value == ROLL and can_access_roll(y, x):
                 accessible_rolls += 1
     return accessible_rolls
+
+def remove_rolls_from(y, x):
+    arr[y][x] = NO_ROLL
+    for (dy, dx) in deltas:
+        #if arr[y + dy]
+        pass
 
 print('Result (part 1):', count_accessible_rolls())
