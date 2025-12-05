@@ -44,7 +44,19 @@ def count_accessible_rolls():
 def remove_rolls_from(y, x):
     arr[y][x] = NO_ROLL
     for (dy, dx) in deltas:
-        #if arr[y + dy]
-        pass
+        if (
+            in_bounds(y + dy, x + dx)
+            and arr[y + dy][x + dx] == ROLL
+            and can_access_roll(y + dy, x + dx)
+        ):
+            remove_rolls_from(y + dy, x + dx)
+
+def remove_rolls():
+    for y, row in enumerate(arr):
+        for x, value in enumerate(row):
+            if value == ROLL and can_access_roll(y, x):
+                remove_rolls_from(y, x)
 
 print('Result (part 1):', count_accessible_rolls())
+
+remove_rolls()
