@@ -47,20 +47,11 @@ def solve_part2(input_filename):
             ]
             for line in open(filename, 'r').readlines()
         ]
-        columns = {}
-        for row in matrix[:-1]:
-            group_id = 0
-            digit_id = 0
-            for col_id, value in enumerate(row):
-                if digit_id == column_counts[group_id]:
-                    group_id += 1
-                    digit_id = 0
-                    continue
-                if col_id not in columns:
-                    columns[col_id] = []
-                columns[col_id].append(value)
-                digit_id += 1
-        return columns
+        for matrix_col_id in range(len(matrix[0])):
+            matrix_col_digits = [
+                matrix[matrix_row_id][matrix_col_id] for matrix_row_id in range(len(matrix) - 1)
+            ]
+            print(matrix_col_digits)
 
     print(parse_problems(input_filename, get_column_counts(input_filename)))
 
