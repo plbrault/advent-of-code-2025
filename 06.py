@@ -18,7 +18,10 @@ def solve_part1(input_filename):
             result += reduce(lambda acc, n : eval(f"{acc} {operator} {n}"), numbers)
         return result
 
-    data = parse_file('input.txt')
+    data = parse_file(input_filename)
     print('Result (part 1):', solve_worksheet(data))
+
+def solve_part2(input_filename):
+    pass
 
 solve_part1('input.txt')
