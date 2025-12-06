@@ -22,16 +22,15 @@ def count_fresh_ingredients(fresh_ranges, available_ids):
 def merge_intersecting_ranges(id_ranges):
     id_ranges.sort(key=lambda id_range: id_range[0])
     merged_ranges = []
-    current_merge = None
-    for id_range in id_ranges:
-        if not current_merge:
-            current_merge = id_range
-            continue
+    current_merge = id_ranges[0]
+    for id_range in id_ranges[1:]:
+        print(current_merge, id_range)
         if current_merge[0] <= id_range[0] and current_merge[1] >= id_range[0]:
             current_merge[1] = max(current_merge[1], id_range[1])
         else:
             merged_ranges.append(current_merge)
-            current_merge = None
+            current_merge = id_range
+    merged_ranges.append(current_merge)
     return merged_ranges
 
 fresh_ranges, available_ids = parse_file('input.txt')
