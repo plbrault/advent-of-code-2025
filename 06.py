@@ -23,7 +23,7 @@ def solve_part1(input_filename):
     print('Result (part 1):', solve_worksheet(data))
 
 def solve_part2(input_filename):
-    def get_problem_widths(filename):
+    def get_column_counts(filename):
         matrix = [
             [
                 (int(value) if value.isnumeric() else value)
@@ -39,7 +39,7 @@ def solve_part2(input_filename):
                 for col_id in range(len(matrix[0]))
         ]
 
-    def parse_problems(filename, problem_widths):
+    def parse_problems(filename, column_counts):
         matrix = [
             [
                 (int(value) if value.isnumeric() else value)
@@ -52,7 +52,7 @@ def solve_part2(input_filename):
             group_id = 0
             digit_id = 0
             for col_id, value in enumerate(row):
-                if digit_id == problem_widths[group_id]:
+                if digit_id == column_counts[group_id]:
                     group_id += 1
                     digit_id = 0
                     continue
@@ -62,7 +62,7 @@ def solve_part2(input_filename):
                 digit_id += 1
         return columns
 
-    print(parse_problems(input_filename, get_problem_widths(input_filename)))
+    print(parse_problems(input_filename, get_column_counts(input_filename)))
 
 solve_part1('input.txt')
 solve_part2('input.txt')
