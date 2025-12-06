@@ -56,8 +56,15 @@ def solve_part2(input_filename):
                 numbers.append(int(number_str))
         return numbers
 
+    def parse_operators(filename):
+        return [
+            [value for value in line.replace('\n', '').split(' ') if value != '']
+            for line in open(filename, 'r').readlines()
+        ][-1]
+
     column_count_per_problem = get_column_count_per_problem(input_filename)
     numbers = parse_numbers(input_filename)
+    operators = parse_operators(input_filename)
 
 
 
