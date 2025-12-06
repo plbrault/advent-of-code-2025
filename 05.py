@@ -11,18 +11,16 @@ def parse_file(filename):
             available_ids.append(int(line))
     return fresh_ranges, available_ids
 
-def generate_ids(id_ranges):
-    return {
-        id for id_range in id_ranges
-            for id in range(id_range[0], id_range[1] + 1)
-    }
 
-def count_fresh_ingredients(fresh_ids, available_ids):
-    return len([
-        id for id in available_ids if id in fresh_ids
-    ])
+def count_fresh_ingredients(fresh_ranges, available_ids):
+    fresh_count = 0
+    for available_id in available_ids:
+        for fresh_range in fresh_ranges:
+            if available_id >= fresh_range[0] and available_id <= fresh_range[1]:
+                fresh_count += 1
+                break
+    return fresh_count
 
 fresh_ranges, available_ids = parse_file('input.txt')
-fresh_ids = generate_ids(fresh_ranges)
 
-print('Result (part 1):', count_fresh_ingredients(fresh_ids, available_ids))
+print('Result (part 1):', count_fresh_ingredients(fresh_ranges, available_ids))
