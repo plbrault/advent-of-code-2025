@@ -1,3 +1,5 @@
+from functools import reduce
+
 def parse_file(filename):
     return [
         [
@@ -8,10 +10,13 @@ def parse_file(filename):
     ]
 
 def solve_worksheet(worksheet):
+    result = 0
     for col_id in range(len(worksheet[0])):
-        operation = worksheet[len(worksheet) - 1][col_id]
-        print(operation)
+        operator = worksheet[len(worksheet) - 1][col_id]
+        numbers = [row[col_id] for row in worksheet[:-1]]
+        result += reduce(lambda acc, n : eval(f"{acc} {operator} {n}"), numbers)
+    return result
 
 data = parse_file('input.txt')
-solve_worksheet(data)
+print('Result (part 1):', solve_worksheet(data))
 #print(parse_file('input.txt'))
