@@ -47,11 +47,14 @@ def solve_part2(input_filename):
             ]
             for line in open(filename, 'r').readlines()
         ]
+        numbers = []
         for matrix_col_id in range(len(matrix[0])):
-            matrix_col_digits = ''.join([
+            number_str = ''.join([
                 matrix[matrix_row_id][matrix_col_id] for matrix_row_id in range(len(matrix) - 1)
             ]).strip()
-            print(matrix_col_digits)
+            if number_str:
+                numbers.append(int(number_str))
+        return numbers
 
     print(parse_numbers(input_filename, get_column_counts(input_filename)))
 
