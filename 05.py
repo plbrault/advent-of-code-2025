@@ -4,8 +4,8 @@ def parse_file(filename):
     with open(filename, 'r') as file:
         line = file.readline().replace('\n', '')
         while line != '':
-            start, end = [int(value) for value in line.split('-')]
-            fresh_ranges.append((start, end))
+            id_range = [int(value) for value in line.split('-')]
+            fresh_ranges.append(id_range)
             line = file.readline().replace('\n', '')
         for line in file:
             available_ids.append(int(line))
@@ -21,7 +21,18 @@ def count_fresh_ingredients(fresh_ranges, available_ids):
 
 def merge_intersecting_ranges(id_ranges):
     id_ranges.sort(key=lambda id_range: id_range[0])
-    return id_ranges
+    merged_ranges = []
+    current_merge = None
+    for id_range in id_ranges:
+        if not current_merge:
+            current_merge = id_range
+            continue
+        if current_merge[0] <= id_range[0] and current_merge[1] >= id_range[0]:
+            current_merge[1] = max(current_merge[1], id_range[1])
+        else:
+            merged_ranges.append(current_merge)
+            current_merge = None
+    return merged_ranges
 
 fresh_ranges, available_ids = parse_file('input.txt')
 
