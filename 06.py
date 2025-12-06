@@ -42,15 +42,15 @@ def solve_part2(input_filename):
     def parse_problems(filename, column_counts):
         matrix = [
             [
-                (int(value) if value.isnumeric() else value)
+                value
                 for value in list(line.replace('\n', ''))
             ]
             for line in open(filename, 'r').readlines()
         ]
         for matrix_col_id in range(len(matrix[0])):
-            matrix_col_digits = [
+            matrix_col_digits = ''.join([
                 matrix[matrix_row_id][matrix_col_id] for matrix_row_id in range(len(matrix) - 1)
-            ]
+            ]).strip()
             print(matrix_col_digits)
 
     print(parse_problems(input_filename, get_column_counts(input_filename)))
