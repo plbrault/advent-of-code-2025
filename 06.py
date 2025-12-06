@@ -39,7 +39,7 @@ def solve_part2(input_filename):
                 for col_id in range(len(matrix[0]))
         ]
 
-    def parse_problems(filename, column_counts):
+    def parse_numbers(filename, column_counts):
         matrix = [
             [
                 value
@@ -53,7 +53,7 @@ def solve_part2(input_filename):
             ]).strip()
             print(matrix_col_digits)
 
-    print(parse_problems(input_filename, get_column_counts(input_filename)))
+    print(parse_numbers(input_filename, get_column_counts(input_filename)))
 
 solve_part1('input.txt')
 solve_part2('input.txt')
