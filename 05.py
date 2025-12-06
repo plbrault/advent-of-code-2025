@@ -19,6 +19,13 @@ def count_fresh_ingredients(fresh_ranges, available_ids):
                 if fresh_range[0] <= available_id <= fresh_range[1]
     })
 
+def merge_intersecting_ranges(id_ranges):
+    id_ranges.sort(key=lambda id_range: id_range[0])
+    return id_ranges
+
 fresh_ranges, available_ids = parse_file('input.txt')
 
 print('Result (part 1):', count_fresh_ingredients(fresh_ranges, available_ids))
+
+fresh_ranges = merge_intersecting_ranges(fresh_ranges)
+print(fresh_ranges)
