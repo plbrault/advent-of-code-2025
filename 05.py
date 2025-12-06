@@ -11,4 +11,13 @@ def parse_file(filename):
             available_ids.append(int(line))
     return fresh_ranges, available_ids
 
-print(parse_file('input.txt'))
+def generate_ids(id_ranges):
+    return {
+        id for id_range in id_ranges
+            for id in range(id_range[0], id_range[1] + 1)
+    }
+
+fresh_ranges, available_ids = parse_file('input.txt')
+fresh_ids = generate_ids(fresh_ranges)
+
+print(fresh_ids)
