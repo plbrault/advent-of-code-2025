@@ -69,6 +69,11 @@ def solve_part2(input_filename):
             for column_count in column_count_per_problem
         ]
 
+    def compute_problems(operators, numbers_per_problem):
+        sum = 0
+        for i, operator in enumerate(operators):
+            sum += reduce(lambda acc, n : eval(f"{acc} {operator} {n}"), numbers_per_problem[i])
+        return sum
 
     column_count_per_problem = get_column_count_per_problem(input_filename)
     numbers = parse_numbers(input_filename)
@@ -76,8 +81,7 @@ def solve_part2(input_filename):
 
     numbers_per_problem = get_numbers_per_problem(column_count_per_problem, numbers)
 
-    print(numbers_per_problem)
-
+    print('Result (part 2):', compute_problems(operators, numbers_per_problem))
 
 
 solve_part1('input.txt')
