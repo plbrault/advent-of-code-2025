@@ -39,7 +39,27 @@ def solve_part2(input_filename):
                 for col_id in range(len(matrix[0]))
         ]
 
-    print(get_column_lengths(input_filename))
+    def read_columns(filename, column_lengths):
+        matrix = [
+            [
+                (int(value) if value.isnumeric() else value)
+                for value in list(line.replace('\n', ''))
+            ]
+            for line in open(filename, 'r').readlines()
+        ]
+        columns = {}
+        for row in matrix[:-1]:
+            col_id = 0
+            local_id = 0
+            for value in row:
+                if local_id == column_lengths[col_id]:
+                    col_id += 1
+                    local_id = 0
+                    continue
+                print(value, column_lengths[col_id], col_id, local_id)
+                local_id += 1
+
+    read_columns(input_filename, get_column_lengths(input_filename))
 
 solve_part1('input.txt')
 solve_part2('input.txt')
