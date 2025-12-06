@@ -13,13 +13,11 @@ def parse_file(filename):
 
 
 def count_fresh_ingredients(fresh_ranges, available_ids):
-    fresh_count = 0
-    for available_id in available_ids:
-        for fresh_range in fresh_ranges:
-            if available_id >= fresh_range[0] and available_id <= fresh_range[1]:
-                fresh_count += 1
-                break
-    return fresh_count
+    return len({
+        available_id for available_id in available_ids
+            for fresh_range in fresh_ranges
+                if fresh_range[0] <= available_id <= fresh_range[1]
+    })
 
 fresh_ranges, available_ids = parse_file('input.txt')
 
