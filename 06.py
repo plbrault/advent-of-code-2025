@@ -62,16 +62,21 @@ def solve_part2(input_filename):
             for line in open(filename, 'r').readlines()
         ][-1]
 
-    def solve_problems(column_count_per_problem, numbers, operators):
+    def get_numbers_per_problem(column_count_per_problem, numbers):
         number_iterator = iter(numbers)
-        for column_count in column_count_per_problem:
-            print([next(number_iterator) for i in range(column_count)])
+        return [
+            [next(number_iterator) for i in range(column_count)]
+            for column_count in column_count_per_problem
+        ]
+
 
     column_count_per_problem = get_column_count_per_problem(input_filename)
     numbers = parse_numbers(input_filename)
     operators = parse_operators(input_filename)
 
-    print('Result (part 2)', solve_problems(column_count_per_problem, numbers, operators))
+    numbers_per_problem = get_numbers_per_problem(column_count_per_problem, numbers)
+
+    print(numbers_per_problem)
 
 
 
