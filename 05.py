@@ -17,7 +17,12 @@ def generate_ids(id_ranges):
             for id in range(id_range[0], id_range[1] + 1)
     }
 
+def count_fresh_ingredients(fresh_ids, available_ids):
+    return len([
+        id for id in available_ids if id in fresh_ids
+    ])
+
 fresh_ranges, available_ids = parse_file('input.txt')
 fresh_ids = generate_ids(fresh_ranges)
 
-print(fresh_ids)
+print('Result (part 1):', count_fresh_ingredients(fresh_ids, available_ids))
