@@ -68,29 +68,27 @@ def solve_part2(matrix):
     start_pos = get_start_pos(matrix)
     west, south, east = get_navigation_functions(matrix)
 
-    def move_beam(beam):
+    def move_beam(matrix, beam):
         if value(matrix, south(beam)) == EMPTY_SPACE:
             update(matrix, south(beam), BEAM)
-            return move_beam(south(beam))
+            return move_beam(matrix, south(beam))
         elif value(matrix, south(beam)) == SPLITTER:
-            return split(south(beam))
+            return split(matrix, south(beam))
         return 0
 
-    def split(splitter):
-        new_beams = []
+    def split(matrix, splitter):
+        new_timelines = 0
         if value(matrix, west(splitter)) == EMPTY_SPACE:
             update(matrix, west(splitter), BEAM)
-            new_beams.append(west(splitter))
+            new_timelines += 1 + move_beam(copy(matrix), west(splitter))
         if value(matrix, east(splitter)) == EMPTY_SPACE:
             update(matrix, east(splitter), BEAM)
-            new_beams.append(east(splitter))
-        splits = 0 if len(new_beams) == 0 else 1
-        for beam in new_beams:
-            splits += move_beam(beam)
-        return splits
+            new_timelines += 1 + move_beam(copy(matrix), west(splitter))
+        return new_timelines
 
-    print('Result (part 2):', move_beam(start_pos))
+    print('Result (part 2):', move_beam(matrix, start_pos))
 
-the_matrix = [list(line.replace('\n','')) for line in open('input.txt').readlines()]
-solve_part1(the_matrix)
-solve_part2(the_matrix)
+matrix_1 = [list(line.replace('\n','')) for line in open('input.txt').readlines()]
+matrix_2 = copy(matrix_1)
+solve_part1(matrix_1)
+solve_part2(matrix_2)
