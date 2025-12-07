@@ -40,23 +40,23 @@ def update(pos, value):
 def move_beam(beam=start_pos):
     if value(south(beam)) == EMPTY_SPACE:
         update(south(beam), BEAM)
-        move_beam(south(beam))
+        return move_beam(south(beam))
     elif value(south(beam)) == SPLITTER:
         return split(south(beam))
     return 0
 
 def split(splitter):
-    print('!!!!!')
+    splits = 0
     if value(west(splitter)) == EMPTY_SPACE:
         update(west(splitter), BEAM)
-        return 1 + move_beam(west(splitter))
-    if value(west(splitter)) == SPLITTER:
-        return split(west(splitter))
+        splits += 1 + move_beam(west(splitter))
+    elif value(west(splitter)) == SPLITTER:
+        splits += split(west(splitter))
     if value(east(splitter)) == EMPTY_SPACE:
         update(east(splitter), BEAM)
-        return 1 + move_beam(east(splitter))
-    if value(east(splitter)) == SPLITTER:
-        return split(east(splitter))
-    return 0
+        splits += 1 + move_beam(east(splitter))
+    elif value(east(splitter)) == SPLITTER:
+        splits += split(east(splitter))
+    return splits
 
 print('Result (part 1):', move_beam())
