@@ -19,7 +19,17 @@ def southeast(pos):
     row, col = pos
     return (row + 1, col + 1) if (row < len(matrix) - 1 and col < len(matrix[0]) - 1) else None
 
+def west(pos):
+    row, col = pos
+    return (row, col - 1) if col > 0 else None
+
+def east(pos):
+    row, col = pos
+    return (row, col + 1) if col < len(matrix[0]) - 1 else None
+
 def value(pos):
+    if not pos:
+        return None
     row, col = pos
     return matrix[row][col]
 
@@ -32,14 +42,21 @@ def move_beam(beam=start_pos):
         update(south(beam), BEAM)
         move_beam(south(beam))
     elif value(south(beam)) == SPLITTER:
-        if southwest(beam) and value(southwest(beam)) != BEAM:
-            if value(southwest(beam)) == EMPTY_SPACE:
-                update(south(beam), BEAM)
-                move_beam(south(beam))
-                return 0
-            elif value(southwest(beam)) == SPLITTER:
-                return split(southwest(beam))
+        return split(south(beam))
     return 0
 
 def split(splitter):
-    pass
+    print('!!!!!')
+    if value(west(splitter)) == EMPTY_SPACE:
+        update(west(splitter), BEAM)
+        return 1 + move_beam(west(splitter))
+    if value(west(splitter)) == SPLITTER:
+        return split(west(splitter))
+    if value(east(splitter)) == EMPTY_SPACE:
+        update(east(splitter), BEAM)
+        return 1 + move_beam(east(splitter))
+    if value(east(splitter)) == SPLITTER:
+        return split(east(splitter))
+    return 0
+
+print('Result (part 1):', move_beam())
