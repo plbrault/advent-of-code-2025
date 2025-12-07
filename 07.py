@@ -1,64 +1,69 @@
-matrix = [list(line.replace('\n','')) for line in open('input.txt').readlines()]
-
 START = 'S'
 EMPTY_SPACE = '.'
 SPLITTER = '^'
 BEAM = '|'
 
-start_pos = (0, matrix[0].index(START))
+def pos_fn(matrix):
+    def south(pos):
+        row, col = pos
+        return (row + 1, col) if row < len(matrix) - 1 else None
 
-def south(pos):
-    row, col = pos
-    return (row + 1, col) if row < len(matrix) - 1 else None
+    def southwest(pos):
+        row, col = pos
+        return (row + 1, col - 1) if (row < len(matrix) - 1 and col > 0) else None
 
-def southwest(pos):
-    row, col = pos
-    return (row + 1, col - 1) if (row < len(matrix) - 1 and col > 0) else None
+    def southeast(pos):
+        row, col = pos
+        return (row + 1, col + 1) if (row < len(matrix) - 1 and col < len(matrix[0]) - 1) else None
 
-def southeast(pos):
-    row, col = pos
-    return (row + 1, col + 1) if (row < len(matrix) - 1 and col < len(matrix[0]) - 1) else None
+    def west(pos):
+        row, col = pos
+        return (row, col - 1) if col > 0 else None
 
-def west(pos):
-    row, col = pos
-    return (row, col - 1) if col > 0 else None
+    def east(pos):
+        row, col = pos
+        return (row, col + 1) if col < len(matrix[0]) - 1 else None
 
-def east(pos):
-    row, col = pos
-    return (row, col + 1) if col < len(matrix[0]) - 1 else None
+    return (south, southwest, southeast, west, east)
 
-def value(pos, matrix_=matrix):
+def get_start_pos(matrix):
+    return (0, matrix[0].index(START))
+
+def value(matrix, pos):
     if not pos:
         return None
     row, col = pos
-    return matrix_[row][col]
+    return matrix[row][col]
 
-def update(pos, value, matrix_=matrix):
+def update(matrix, pos, value):
     row, col = pos
-    matrix_[row][col] = value
+    matrix[row][col] = value
 
-def copy(matrix_):
-    return [row[:] for row in matrix_]
+def copy(matrix):
+    return [row[:] for row in matrix]
 
-def print_matrix(matrix_=matrix):
+def print_matrix(matrix):
     print('\n'.join([''.join(row) for row in matrix]))
 
-def solve_part1():
+def solve_part1(matrix):
+    start_pos = get_start_pos(matrix)
+    south, southwest, southeast, west, east = pos_fn(matrix)
+
     def move_beam(beam=start_pos):
-        if value(south(beam)) == EMPTY_SPACE:
-            update(south(beam), BEAM)
+        if value(matrix, south(beam)) == EMPTY_SPACE:
+            update(matrix, south(beam), BEAM)
             return move_beam(south(beam))
-        elif value(south(beam)) == SPLITTER:
+        elif value(matrix, south(beam)) == SPLITTER:
             return split(south(beam))
         return 0
 
     def split(splitter):
         new_beams = []
-        if value(west(splitter)) == EMPTY_SPACE:
-            update(west(splitter), BEAM)
+        if value(matrix, west(splitter)) == EMPTY_SPACE:
+            update(matrix, west(splitter), BEAM)
             new_beams.append(west(splitter))
-        if value(east(splitter)) == EMPTY_SPACE:
-            update(east(splitter), BEAM)
+        if value(matrix, east(splitter)) == EMPTY_SPACE:
+            update(matrix, east(splitter), BEAM)
             new_beams.append(east(splitter))
         splits = 0 if len(new_beams) == 0 else 1
         for beam in new_beams:
@@ -67,8 +72,9 @@ def solve_part1():
 
     print('Result (part 1):', move_beam())
 
-def solve_part2():
+def solve_part2(matrix):
     pass
 
-solve_part1()
-solve_part2()
+the_matrix = [list(line.replace('\n','')) for line in open('input.txt').readlines()]
+solve_part1(the_matrix)
+solve_part2(the_matrix)
