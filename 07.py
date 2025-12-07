@@ -27,17 +27,20 @@ def east(pos):
     row, col = pos
     return (row, col + 1) if col < len(matrix[0]) - 1 else None
 
-def value(pos):
+def value(pos, matrix_=matrix):
     if not pos:
         return None
     row, col = pos
-    return matrix[row][col]
+    return matrix_[row][col]
 
-def update(pos, value):
+def update(pos, value, matrix_=matrix):
     row, col = pos
-    matrix[row][col] = value
+    matrix_[row][col] = value
 
-def print_matrix():
+def copy(matrix_):
+    return [row[:] for row in matrix_]
+
+def print_matrix(matrix_=matrix):
     print('\n'.join([''.join(row) for row in matrix]))
 
 def solve_part1():
@@ -64,4 +67,8 @@ def solve_part1():
 
     print('Result (part 1):', move_beam())
 
+def solve_part2():
+    pass
+
 solve_part1()
+solve_part2()
