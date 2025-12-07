@@ -37,6 +37,9 @@ def update(pos, value):
     row, col = pos
     matrix[row][col] = value
 
+def print_matrix():
+    print('\n'.join([''.join(row) for row in matrix]))
+
 def move_beam(beam=start_pos):
     if value(south(beam)) == EMPTY_SPACE:
         update(south(beam), BEAM)
@@ -60,3 +63,4 @@ def split(splitter):
     return splits
 
 print('Result (part 1):', move_beam())
+print_matrix()
