@@ -75,9 +75,11 @@ def count_timelines():
             elif value(pos) == BEAM:
                 timelines = 0
                 if value(west(pos)) == SPLITTER:
-                    timelines += value(northwest(pos)) if isinstance(value(northwest(pos)), int) else 0
+                    timelines += (value(northwest(pos))
+                        if isinstance(value(northwest(pos)), int) else 0)
                 if value(east(pos)) == SPLITTER:
-                    timelines += value(northeast(pos)) if isinstance(value(northeast(pos)), int) else 0
+                    timelines += (value(northeast(pos))
+                        if isinstance(value(northeast(pos)), int) else 0)
                 if isinstance(value(north(pos)), int):
                     timelines += value(north(pos))
                 update(pos, timelines)
