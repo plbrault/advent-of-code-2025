@@ -73,14 +73,15 @@ def count_timelines():
             if value(pos) == START:
                 update(pos, 1)
             elif value(pos) == BEAM:
-                update(pos, sum([
-                    value(northwest(pos)) if northwest(pos) and isinstance(value(northwest(pos)), int) else 0,
-                    value(north(pos)) if north(pos) and isinstance(value(north(pos)), int) else 0,
-                    value(northeast(pos)) if northeast(pos) and isinstance(value(northeast(pos)), int) else 0
-                ]))
-                print(value(pos))
-        print('---')
-    return(sum([value for value in matrix[-1] if isinstance(value, int)]))
+                timelines = 0
+                if value(west(pos)) == SPLITTER:
+                    timelines += value(northwest(pos)) if isinstance(value(northwest(pos)), int) else 0
+                if value(east(pos)) == SPLITTER:
+                    timelines += value(northeast(pos)) if isinstance(value(northeast(pos)), int) else 0
+                if isinstance(value(north(pos)), int):
+                    timelines += value(north(pos))
+                update(pos, timelines)
+    return sum([value for value in matrix[-1] if isinstance(value, int)])
 
 print('Result (part 1):', move_beam())
 print('Result (part 2):', count_timelines())
