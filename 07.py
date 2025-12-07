@@ -1,4 +1,9 @@
-def parse_input(filename):
-    return [list(line.replace('\n','')) for line in open(filename).readlines()]
+matrix = [list(line.replace('\n','')) for line in open('input.txt').readlines()]
 
-print(parse_input('input.txt'))
+START = 'S'
+EMPTY_SPACE = '.'
+SPLITTER = '^'
+
+start_pos = (0, matrix[0].index(START))
+
+print(start_pos)
