@@ -34,8 +34,11 @@ def update(matrix, pos, value):
 def copy(matrix):
     return [row[:] for row in matrix]
 
+def matrix_to_str(matrix):
+    return '\n'.join([''.join(row) for row in matrix])
+
 def print_matrix(matrix):
-    print('\n'.join([''.join(row) for row in matrix]))
+    print(matrix_to_str(matrix))
 
 def solve_part1(matrix):
     start_pos = get_start_pos(matrix)
@@ -68,25 +71,26 @@ def solve_part2(matrix):
     start_pos = get_start_pos(matrix)
     west, south, east = get_navigation_functions(matrix)
 
+    timelines = []
+
     def move_beam(matrix, beam):
+        update(matrix, beam, BEAM)
         if value(matrix, south(beam)) == EMPTY_SPACE:
-            update(matrix, south(beam), BEAM)
-            return move_beam(matrix, south(beam))
+            move_beam(matrix, south(beam))
         elif value(matrix, south(beam)) == SPLITTER:
-            return split(matrix, south(beam))
+            split(matrix, south(beam))
+        elif south(beam) is None:
+            timelines.append(matrix)
         return 0
 
     def split(matrix, splitter):
-        new_timelines = 0
         if value(matrix, west(splitter)) == EMPTY_SPACE:
-            update(matrix, west(splitter), BEAM)
-            new_timelines += 1 + move_beam(copy(matrix), west(splitter))
+            move_beam(copy(matrix), west(splitter))
         if value(matrix, east(splitter)) == EMPTY_SPACE:
-            update(matrix, east(splitter), BEAM)
-            new_timelines += 1 + move_beam(copy(matrix), west(splitter))
-        return new_timelines
+            move_beam(copy(matrix), east(splitter))
 
-    print('Result (part 2):', move_beam(matrix, start_pos))
+    move_beam(matrix, start_pos)
+    print('Result (part 2):', len(set([matrix_to_str(timeline) for timeline in timelines])))
 
 matrix_1 = [list(line.replace('\n','')) for line in open('input.txt').readlines()]
 matrix_2 = copy(matrix_1)
