@@ -40,27 +40,28 @@ def update(pos, value):
 def print_matrix():
     print('\n'.join([''.join(row) for row in matrix]))
 
-def move_beam(beam=start_pos):
-    if value(south(beam)) == EMPTY_SPACE:
-        update(south(beam), BEAM)
-        return move_beam(south(beam))
-    elif value(south(beam)) == SPLITTER:
-        return split(south(beam))
-    return 0
+def solve_part1():
+    def move_beam(beam=start_pos):
+        if value(south(beam)) == EMPTY_SPACE:
+            update(south(beam), BEAM)
+            return move_beam(south(beam))
+        elif value(south(beam)) == SPLITTER:
+            return split(south(beam))
+        return 0
 
-def split(splitter):
-    new_beams = []
-    if value(west(splitter)) == EMPTY_SPACE:
-        update(west(splitter), BEAM)
-        new_beams.append(west(splitter))
-    if value(east(splitter)) == EMPTY_SPACE:
-        update(east(splitter), BEAM)
-        new_beams.append(east(splitter))
-    
-    splits = 0 if len(new_beams) == 0 else 1
-    for beam in new_beams:
-        splits += move_beam(beam)
-    return splits
+    def split(splitter):
+        new_beams = []
+        if value(west(splitter)) == EMPTY_SPACE:
+            update(west(splitter), BEAM)
+            new_beams.append(west(splitter))
+        if value(east(splitter)) == EMPTY_SPACE:
+            update(east(splitter), BEAM)
+            new_beams.append(east(splitter))
+        splits = 0 if len(new_beams) == 0 else 1
+        for beam in new_beams:
+            splits += move_beam(beam)
+        return splits
 
-print('Result (part 1):', move_beam())
-# print_matrix()
+    print('Result (part 1):', move_beam())
+
+solve_part1()
