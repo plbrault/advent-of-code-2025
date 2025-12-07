@@ -52,14 +52,10 @@ def split(splitter):
     splits = 0
     if value(west(splitter)) == EMPTY_SPACE:
         update(west(splitter), BEAM)
-        splits += 1 + move_beam(west(splitter))
-    elif value(west(splitter)) == SPLITTER:
-        splits += split(west(splitter))
+        splits += 1 +move_beam(west(splitter))
     if value(east(splitter)) == EMPTY_SPACE:
         update(east(splitter), BEAM)
-        splits += 1 + move_beam(east(splitter))
-    elif value(east(splitter)) == SPLITTER:
-        splits += split(east(splitter))
+        splits += 1 +move_beam(east(splitter))
     return splits
 
 print('Result (part 1):', move_beam())
