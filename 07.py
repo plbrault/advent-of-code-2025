@@ -71,26 +71,24 @@ def solve_part2(matrix):
     start_pos = get_start_pos(matrix)
     west, south, east = get_navigation_functions(matrix)
 
-    timelines = []
-
-    def move_beam(matrix, beam):
-        update(matrix, beam, BEAM)
+    def move_beam(beam):
         if value(matrix, south(beam)) == EMPTY_SPACE:
-            move_beam(matrix, south(beam))
+            return move_beam(south(beam))
         elif value(matrix, south(beam)) == SPLITTER:
-            split(matrix, south(beam))
+            return split(south(beam))
         elif south(beam) is None:
-            timelines.append(matrix)
+            return 1
         return 0
 
-    def split(matrix, splitter):
+    def split(splitter):
+        timelines = 0
         if value(matrix, west(splitter)) == EMPTY_SPACE:
-            move_beam(copy(matrix), west(splitter))
+            timelines += move_beam(west(splitter))
         if value(matrix, east(splitter)) == EMPTY_SPACE:
-            move_beam(copy(matrix), east(splitter))
+            timelines += move_beam(east(splitter))
+        return timelines
 
-    move_beam(matrix, start_pos)
-    print('Result (part 2):', len(set([matrix_to_str(timeline) for timeline in timelines])))
+    print('Result (part 2):', move_beam(start_pos))
 
 matrix_1 = [list(line.replace('\n','')) for line in open('input.txt').readlines()]
 matrix_2 = copy(matrix_1)
