@@ -72,13 +72,11 @@ def solve_part2(matrix):
     west, south, east = get_navigation_functions(matrix)
 
     def move_beam(beam):
-        if value(matrix, south(beam)) == EMPTY_SPACE:
-            return move_beam(south(beam))
-        elif value(matrix, south(beam)) == SPLITTER:
-            return split(south(beam))
-        elif south(beam) is None:
+        if south(beam) is None:
             return 1
-        return 0
+        if value(matrix, south(beam)) == SPLITTER:
+            return split(south(beam))
+        return move_beam(south(beam))
 
     def split(splitter):
         timelines = 0
