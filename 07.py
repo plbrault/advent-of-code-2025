@@ -49,9 +49,6 @@ def move_beam(beam=start_pos):
     return 0
 
 def split(splitter):
-    #print_matrix()
-    #input()
-
     new_beams = []
     if value(west(splitter)) == EMPTY_SPACE:
         update(west(splitter), BEAM)
@@ -60,7 +57,7 @@ def split(splitter):
         update(east(splitter), BEAM)
         new_beams.append(east(splitter))
     
-    splits = 0 if len(new_beams) < 2 else 1
+    splits = 0 if len(new_beams) == 0 else 1
     for beam in new_beams:
         splits += move_beam(beam)
     return splits
