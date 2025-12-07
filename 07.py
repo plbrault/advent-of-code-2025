@@ -67,9 +67,20 @@ def split(splitter):
     return splits
 
 def count_timelines():
-    for pos in [tuple([len(matrix) - 1, col]) for col in range(len(matrix[0]))]:
-        if value(pos) == BEAM:
-            print(pos)
+    for i, row in enumerate(matrix):
+        for j, _ in enumerate(row):
+            pos = (i, j)
+            if value(pos) == START:
+                update(pos, 1)
+            elif value(pos) == BEAM:
+                update(pos, sum([
+                    value(northwest(pos)) if northwest(pos) and isinstance(value(northwest(pos)), int) else 0,
+                    value(north(pos)) if north(pos) and isinstance(value(north(pos)), int) else 0,
+                    value(northeast(pos)) if northeast(pos) and isinstance(value(northeast(pos)), int) else 0
+                ]))
+                print(value(pos))
+        print('---')
+    return(sum([value for value in matrix[-1] if isinstance(value, int)]))
 
 print('Result (part 1):', move_beam())
 print('Result (part 2):', count_timelines())
