@@ -7,6 +7,18 @@ BEAM = '|'
 
 start_pos = (0, matrix[0].index(START))
 
+def north(pos):
+    row, col = pos
+    return (row - 1, col) if row > 0 else None
+
+def northwest(pos):
+    row, col = pos
+    return (row - 1, col - 1) if (row > 0 and col > 0) else None
+
+def northeast(pos):
+    row, col = pos
+    return (row - 1, col + 1) if (row > 0 and col < len(matrix[0]) - 1) else None
+
 def south(pos):
     row, col = pos
     return (row + 1, col) if row < len(matrix) - 1 else None
@@ -54,4 +66,10 @@ def split(splitter):
         splits += move_beam(beam)
     return splits
 
+def count_timelines():
+    for pos in [tuple([len(matrix) - 1, col]) for col in range(len(matrix[0]))]:
+        if value(pos) == BEAM:
+            print(pos)
+
 print('Result (part 1):', move_beam())
+print('Result (part 2):', count_timelines())
