@@ -63,4 +63,4 @@ def split(splitter):
     return splits
 
 print('Result (part 1):', move_beam())
-print_matrix()
+# print_matrix()
