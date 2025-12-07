@@ -3,7 +3,7 @@ EMPTY_SPACE = '.'
 SPLITTER = '^'
 BEAM = '|'
 
-def pos_fn(matrix):
+def get_navigation_functions(matrix):
     def south(pos):
         row, col = pos
         return (row + 1, col) if row < len(matrix) - 1 else None
@@ -47,7 +47,7 @@ def print_matrix(matrix):
 
 def solve_part1(matrix):
     start_pos = get_start_pos(matrix)
-    south, southwest, southeast, west, east = pos_fn(matrix)
+    south, southwest, southeast, west, east = get_navigation_functions(matrix)
 
     def move_beam(beam=start_pos):
         if value(matrix, south(beam)) == EMPTY_SPACE:
