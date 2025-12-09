@@ -15,10 +15,29 @@ def create_connection_graph(connections):
         graph[junction_box_2].append(junction_box_1)
     return graph
 
+def compute_circuits(connection_graph):
+    circuits = []
+    processed_boxes = set()
+
+    def build_circuit(junction_box, circuit):
+        processed_boxes.add(junction_box)
+        circuit.add(junction_box)
+
+        for other_junction_box in connection_graph[junction_box]:
+            if other_junction_box not in processed_boxes:
+                build_circuit(other_junction_box, circuit)
+
+    for junction_box in connection_graph:
+        if junction_box not in processed_boxes:
+            circuit = set()
+            build_circuit(junction_box, circuit)
+            circuits.append(circuit)
+
+    return circuits
+
 junction_boxes = [tuple([int(value) for value in line.split(',')]) for line in open('input.txt').readlines()]
 
 print('Calculating distances...')
-
 distances = {}
 for i, junction_box in enumerate(junction_boxes):
     for _, other_junction_box in enumerate(junction_boxes[i + 1:]):
@@ -30,29 +49,12 @@ sorted_distances = {key: value for key, value in sorted(distances.items(), key=l
 
 def solve_part1():
     print('=== PART 1 ===')
-    print('Creating graph of connected junction boxes...')
+    print('Creating connection graph...')
     connections_to_use = list(sorted_distances.keys())[:PART1_NUM_CONNECTIONS_TO_USE]
-    graph = create_connection_graph(connections_to_use)
+    connection_graph = create_connection_graph(connections_to_use)
 
     print('Computing circuits...')
-
-    circuits = []
-    processed_boxes = set()
-
-    def build_circuit(junction_box, circuit):
-        processed_boxes.add(junction_box)
-        circuit.add(junction_box)
-
-        for other_junction_box in graph[junction_box]:
-            if other_junction_box not in processed_boxes:
-                build_circuit(other_junction_box, circuit)
-
-    for junction_box in graph:
-        if junction_box not in processed_boxes:
-            circuit = set()
-            build_circuit(junction_box, circuit)
-            circuits.append(circuit)
-
+    circuits = compute_circuits(connection_graph)
     sorted_circuit_lengths = sorted([len(circuit) for circuit in circuits], reverse=True)
 
     print('Result (part 1):', reduce(
