@@ -56,11 +56,11 @@ def solve_part1():
 
     print('Computing circuits...')
     circuits = compute_circuits(connection_graph)
-    sorted_circuit_lengths = sorted([len(circuit) for circuit in circuits], reverse=True)
+    sorted_circuit_sizes = sorted([len(circuit) for circuit in circuits], reverse=True)
 
     print('Result (part 1):', reduce(
-        lambda acc, circuit_length : acc * circuit_length,
-        sorted_circuit_lengths[:PART1_NUM_CIRCUITS_TO_KEEP])
+        lambda acc, circuit_size : acc * circuit_size,
+        sorted_circuit_sizes[:PART1_NUM_CIRCUITS_TO_KEEP])
     )
 
 def solve_part2():
@@ -81,9 +81,12 @@ def solve_part2():
         print('Number of circuits:', len(circuits))
 
         if len(circuits) == 1:
-            print('Found solution')
-            print('Result (part 2):', connections_to_use[-1][0][0] * connections_to_use[-1][1][0])
-            break
+            circuit_size = len(circuits[0])
+            print('Circuit size:', circuit_size)
+            if circuit_size == len(junction_boxes):
+                print('Found solution')
+                print('Result (part 2):', connections_to_use[-1][0][0] * connections_to_use[-1][1][0])
+                break
 
 solve_part1()
 solve_part2()
