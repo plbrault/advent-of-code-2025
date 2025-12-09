@@ -1,6 +1,7 @@
 PART1_NUM_CONNECTIONS_TO_USE = 10
 PART1_NUM_CIRCUITS_TO_KEEP = 3
 
+from datetime import datetime
 import numpy as np
 from functools import reduce
 
@@ -65,13 +66,14 @@ def solve_part1():
 
 def solve_part2():
     print('=== PART 2 ===')
+
     print(sorted_distances)
     print('---')
 
     for num_connections_to_use in range(PART1_NUM_CONNECTIONS_TO_USE + 1, len(distances)):
         connections_to_use = list(sorted_distances.keys())[:num_connections_to_use]
         print('Adding connection:', connections_to_use[-1])
-        
+
         print(f'Creating connection graph with {num_connections_to_use} connections...')
         connection_graph = create_connection_graph(connections_to_use)
 
@@ -85,8 +87,12 @@ def solve_part2():
             print('Circuit size:', circuit_size)
             if circuit_size == len(junction_boxes):
                 print('Found solution')
-                print('Result (part 2):', connections_to_use[-1][0][0] * connections_to_use[-1][1][0])
+                print('Result (part 2):',
+                    connections_to_use[-1][0][0] * connections_to_use[-1][1][0])
                 break
 
+start_time = datetime.now()
 solve_part1()
 solve_part2()
+end_time = datetime.now()
+print('Completed in', (end_time - start_time).total_seconds(), 'seconds.')
