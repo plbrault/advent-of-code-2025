@@ -1,8 +1,8 @@
+NUM_BOXES_TO_USE = 1000
+NUM_CIRCUITS_TO_KEEP = 3
+
 import numpy as np
 from functools import reduce
-
-NUM_BOXES_TO_USE = 10
-NUM_CIRCUITS_TO_KEEP = 3
 
 junction_boxes = [tuple([int(value) for value in line.split(',')]) for line in open('input.txt').readlines()]
 
