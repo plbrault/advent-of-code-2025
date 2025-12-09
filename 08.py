@@ -67,9 +67,6 @@ def solve_part1():
 def solve_part2():
     print('=== PART 2 ===')
 
-    print(sorted_distances)
-    print('---')
-
     for num_connections_to_use in range(PART1_NUM_CONNECTIONS_TO_USE + 1, len(distances)):
         connections_to_use = list(sorted_distances.keys())[:num_connections_to_use]
         print('Adding connection:', connections_to_use[-1])
