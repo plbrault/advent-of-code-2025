@@ -49,6 +49,7 @@ sorted_distances = {key: value for key, value in sorted(distances.items(), key=l
 
 def solve_part1():
     print('=== PART 1 ===')
+
     print('Creating connection graph...')
     connections_to_use = list(sorted_distances.keys())[:PART1_NUM_CONNECTIONS_TO_USE]
     connection_graph = create_connection_graph(connections_to_use)
@@ -61,5 +62,10 @@ def solve_part1():
         lambda acc, circuit_length : acc * circuit_length,
         sorted_circuit_lengths[:PART1_NUM_CIRCUITS_TO_KEEP])
     )
+
+def solve_part2():
+    print('=== PART 2 ===')
+
+    
 
 solve_part1()
