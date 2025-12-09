@@ -79,6 +79,7 @@ def solve_part2():
 
         if largest_circuit_size == len(junction_boxes):
             print('Found solution')
+            print('Result (part 2):', connections_to_use[0] * connections_to_use[1])
             break
 
 solve_part1()
