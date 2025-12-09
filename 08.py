@@ -65,21 +65,24 @@ def solve_part1():
 
 def solve_part2():
     print('=== PART 2 ===')
+    print(sorted_distances)
+    print('---')
 
     for num_connections_to_use in range(PART1_NUM_CONNECTIONS_TO_USE + 1, len(distances)):
-        print(f'Creating connection graph with {num_connections_to_use} connections...')
         connections_to_use = list(sorted_distances.keys())[:num_connections_to_use]
+        print('Adding connection:', connections_to_use[-1])
+        
+        print(f'Creating connection graph with {num_connections_to_use} connections...')
         connection_graph = create_connection_graph(connections_to_use)
 
         print(f'Computing circuits with {num_connections_to_use} connections...')
         circuits = compute_circuits(connection_graph)
 
-        largest_circuit_size = max([len(circuit) for circuit in circuits])
-        print('Largest circuit size:', largest_circuit_size)
+        print('Number of circuits:', len(circuits))
 
-        if largest_circuit_size == len(junction_boxes):
+        if len(circuits) == 1:
             print('Found solution')
-            print('Result (part 2):', connections_to_use[0] * connections_to_use[1])
+            print('Result (part 2):', connections_to_use[-1][0][0] * connections_to_use[-1][1][0])
             break
 
 solve_part1()
