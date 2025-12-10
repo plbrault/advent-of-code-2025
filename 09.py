@@ -25,11 +25,27 @@ for x in tiles_per_x:
 for y in tiles_per_y:
     tiles_per_y[y] = sorted(tiles_per_y[y], key=lambda tile: tile[0])
 
-rows = sorted(list(tiles_per_y.keys()))
-cols = sorted(list(tiles_per_x.keys()))
+x_values = sorted(list(tiles_per_x.keys()))
+y_values = sorted(list(tiles_per_y.keys()))
 
+largest_area = 0
 for i, tile1 in enumerate(tiles):
     for tile2 in tiles[i + 1:]:
         tile1_x, tile1_y = tile1
         tile2_x, tile2_y = tile2
-        #print(tile1_x, tile1_y, tile2_x, tile2_y)
+
+        if (
+            ((x_values[0] == tile1_x or x_values[-1] == tile1_x)
+                and (y_values[0] == tile2_y or y_values[-1] == tile2_y))
+            or
+            ((x_values[0]) == tile2_x or x_values[-1] == tile2_x)
+                and (y_values[0] == tile1_y or y_values[-1] == tile1_y)
+        ):
+            continue
+
+        width = abs(tile2_x - tile1_x) + 1
+        height = abs(tile2_y - tile1_y) + 1
+        print(tile1, tile2, width, height, width * height)
+        largest_area = max(largest_area, width * height)
+
+print('Result (part 2):', largest_area)
