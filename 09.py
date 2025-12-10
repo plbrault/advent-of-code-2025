@@ -34,25 +34,27 @@ for i, tile1 in enumerate(tiles):
         tile1_2 = (x1, y2)
         tile2_1 = (x2, y1)
 
-        # Il faut que la comparaison avec le plus petit/grand x se fasse à l'intérieur du même y, et vice versa!
+        if (
+            (tile1_2[0] < x_values_per_y[tile1_2[1]][0]
+                or tile1_2[0] > x_values_per_y[tile1_2[1]][-1])
+            and
+            (tile1_2[1] < y_values_per_x[tile1_2[0]][0]
+                or tile1_2[1] > y_values_per_x[tile1_2[0]][-1])
+        ):
+            continue
+        if (
+            (tile2_1[0] < x_values_per_y[tile2_1[1]][0]
+                or tile2_1[0] > x_values_per_y[tile2_1[1]][-1])
+            and
+            (tile2_1[1] < y_values_per_x[tile2_1[0]][0]
+                or tile2_1[1] > y_values_per_x[tile2_1[0]][-1])
+        ):
+            continue
 
-        if (
-            (tile1_2[0] < x_values_per_y[tile1_2[1]][0] or tile1_2[0] > x_values_per_y[tile1_2[1]][-1])
-            and
-            (tile1_2[1] < y_values_per_x[tile1_2[0]][0] or tile1_2[1] > y_values_per_x[tile1_2[0]][-1])
-        ):
-            continue
-        if (
-            (tile2_1[0] < x_values_per_y[tile2_1[1]][0] or tile2_1[0] > x_values_per_y[tile2_1[1]][-1])
-            and
-            (tile2_1[1] < y_values_per_x[tile2_1[0]][0] or tile2_1[1] > y_values_per_x[tile2_1[0]][-1])
-        ):
-            continue
+        #print(tile1, tile2)
 
         width = abs(x2 - x1) + 1
         height = abs(y2 - y1) + 1
-        #if width * height == 50:
-        #    print(tile1, tile2, tile1_2, tile2_1, x_values[0], x_values[-1], y_values[0], y_values[-1])
         largest_area = max(largest_area, width * height)
 
 print('Result (part 2):', largest_area)
