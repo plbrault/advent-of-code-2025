@@ -9,6 +9,8 @@ for i, tile1 in enumerate(tiles):
 
 print('Result (part 1):', largest_area)
 
+x_values = set()
+y_values = set()
 x_values_per_y = {}
 y_values_per_x = {}
 
@@ -17,8 +19,13 @@ for tile in tiles:
         y_values_per_x[tile[0]] = []
     if tile[1] not in x_values_per_y:
         x_values_per_y[tile[1]] = []
+    x_values.add(tile[0])
+    y_values.add(tile[1])
     x_values_per_y[tile[1]].append(tile[0])
     y_values_per_x[tile[0]].append(tile[1])
+
+x_values = sorted(list(x_values))
+y_values = sorted(list(y_values))
 
 for x in y_values_per_x:
     y_values_per_x[x] = sorted(y_values_per_x[x])
@@ -37,10 +44,24 @@ def is_red_or_green(tile):
     ):
         return True
 
-    """if is_before_first_x:
-        for enumerate in 
+    if is_before_first_x:
+        for x in x_values[:x_values.index(tile[0])-1]:
             if tile[1] > y_values_per_x[x][0] and tile[1] < y_values_per_x[x][-1]:
-                return True"""
+                return True
+    if is_after_last_x:
+        for x in x_values[x_values.index(tile[0])-1:]:
+            if tile[1] > y_values_per_x[x][0] and tile[1] < y_values_per_x[x][-1]:
+                return True
+    if is_before_first_y:
+        for y in y_values[:y_values.index(tile[1])-1]:
+            if tile[0] > x_values_per_y[y][0] and tile[0] < x_values_per_y[y][-1]:
+                return True
+    if is_after_last_y:
+        for y in y_values[y_values.index(tile[1])-1:]:
+            if tile[0] > x_values_per_y[y][0] and tile[0] < x_values_per_y[y][-1]:
+                return True
+                
+    return False
 
 largest_area = 0
 for i, tile1 in enumerate(tiles):
