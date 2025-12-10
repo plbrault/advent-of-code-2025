@@ -37,6 +37,8 @@ for i, tile1 in enumerate(tiles):
         tile1_2 = (x1, y2)
         tile2_1 = (x2, y1)
 
+        # Il faut que la comparaison avec le plus petit/grand x se fasse à l'intérieur du même y, et vice versa!
+
         if (
             (tile1_2[0] < x_values[0] or tile1_2[0] > x_values[-1])
             and
