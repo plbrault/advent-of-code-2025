@@ -25,6 +25,17 @@ for x in y_values_per_x:
 for y in x_values_per_y:
     x_values_per_y[y] = sorted(x_values_per_y[y])
 
+def is_red_or_green(tile):
+    is_before_first_x = tile[0] < x_values_per_y[tile[1]][0]
+    is_after_last_x = tile[0] > x_values_per_y[tile[1]][-1]
+    is_before_first_y = tile[1] < y_values_per_x[tile[0]][0]
+    is_after_last_y = tile[1] > y_values_per_x[tile[0]][-1]
+
+    return not (
+        (is_before_first_x or is_after_last_x)
+        and (is_before_first_y or is_after_last_y)
+    )
+
 largest_area = 0
 for i, tile1 in enumerate(tiles):
     for tile2 in tiles[i + 1:]:
@@ -34,24 +45,8 @@ for i, tile1 in enumerate(tiles):
         tile1_2 = (x1, y2)
         tile2_1 = (x2, y1)
 
-        if (
-            (tile1_2[0] < x_values_per_y[tile1_2[1]][0]
-                or tile1_2[0] > x_values_per_y[tile1_2[1]][-1])
-            and
-            (tile1_2[1] < y_values_per_x[tile1_2[0]][0]
-                or tile1_2[1] > y_values_per_x[tile1_2[0]][-1])
-        ):
+        if not (is_red_or_green(tile1_2) and is_red_or_green(tile2_1)):
             continue
-        if (
-            (tile2_1[0] < x_values_per_y[tile2_1[1]][0]
-                or tile2_1[0] > x_values_per_y[tile2_1[1]][-1])
-            and
-            (tile2_1[1] < y_values_per_x[tile2_1[0]][0]
-                or tile2_1[1] > y_values_per_x[tile2_1[0]][-1])
-        ):
-            continue
-
-        #print(tile1, tile2)
 
         width = abs(x2 - x1) + 1
         height = abs(y2 - y1) + 1
