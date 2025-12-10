@@ -50,20 +50,25 @@ def is_red_or_green(tile):
     cond_y = 0
     if is_before_first_x or is_after_last_x:
         for x in x_values[:x_values.index(tile[0])-1]:
-            if tile[1] >= y_values_per_x[x][0] and tile[1] <= y_values_per_x[x][-1]:
+            if tile[1] > y_values_per_x[x][0] and tile[1] < y_values_per_x[x][-1]:
                 cond_x += 1
+                break
         for x in x_values[x_values.index(tile[0])+1:]:
-            if tile[1] >= y_values_per_x[x][0] and tile[1] <= y_values_per_x[x][-1]:
+            if tile[1] > y_values_per_x[x][0] and tile[1] < y_values_per_x[x][-1]:
                 cond_x += 1
+                break
     if is_before_first_y or is_after_last_y:
         for y in y_values[:y_values.index(tile[1])-1]:
-            if tile[0] >= x_values_per_y[y][0] and tile[0] <= x_values_per_y[y][-1]:
+            if tile[0] > x_values_per_y[y][0] and tile[0] < x_values_per_y[y][-1]:
                 cond_y += 1
+                break
         for y in y_values[y_values.index(tile[1])+1:]:
-            if tile[0] >= x_values_per_y[y][0] and tile[0] <= x_values_per_y[y][-1]:
+            if tile[0] > x_values_per_y[y][0] and tile[0] < x_values_per_y[y][-1]:
                 cond_y += 1
+                break
 
-    return cond_x == 2 and cond_y == 2
+    print(cond_x, cond_y)
+    return cond_x + cond_y == 4
 
 largest_area = 0
 for i, tile1 in enumerate(tiles):
