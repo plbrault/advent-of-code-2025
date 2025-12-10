@@ -31,10 +31,16 @@ def is_red_or_green(tile):
     is_before_first_y = tile[1] < y_values_per_x[tile[0]][0]
     is_after_last_y = tile[1] > y_values_per_x[tile[0]][-1]
 
-    return not (
+    if not (
         (is_before_first_x or is_after_last_x)
         and (is_before_first_y or is_after_last_y)
-    )
+    ):
+        return True
+
+    """if is_before_first_x:
+        for enumerate in 
+            if tile[1] > y_values_per_x[x][0] and tile[1] < y_values_per_x[x][-1]:
+                return True"""
 
 largest_area = 0
 for i, tile1 in enumerate(tiles):
