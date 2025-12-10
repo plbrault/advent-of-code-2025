@@ -44,24 +44,23 @@ def is_red_or_green(tile):
     ):
         return True
 
-    if is_before_first_x:
+    true_conds = 0
+    if is_before_first_x or is_after_last_x:
         for x in x_values[:x_values.index(tile[0])-1]:
             if tile[1] > y_values_per_x[x][0] and tile[1] < y_values_per_x[x][-1]:
-                return True
-    if is_after_last_x:
+                true_conds += 1
         for x in x_values[x_values.index(tile[0])-1:]:
             if tile[1] > y_values_per_x[x][0] and tile[1] < y_values_per_x[x][-1]:
-                return True
-    if is_before_first_y:
+                true_conds += 1
+    if is_before_first_y or is_after_last_y:
         for y in y_values[:y_values.index(tile[1])-1]:
             if tile[0] > x_values_per_y[y][0] and tile[0] < x_values_per_y[y][-1]:
-                return True
-    if is_after_last_y:
+                true_conds += 1
         for y in y_values[y_values.index(tile[1])-1:]:
             if tile[0] > x_values_per_y[y][0] and tile[0] < x_values_per_y[y][-1]:
-                return True
-                
-    return False
+                true_conds += 1
+
+    return true_conds >= 2
 
 largest_area = 0
 for i, tile1 in enumerate(tiles):
@@ -77,6 +76,10 @@ for i, tile1 in enumerate(tiles):
 
         width = abs(x2 - x1) + 1
         height = abs(y2 - y1) + 1
+
+        if width * height == 35:
+            print(tile1, tile2)
+
         largest_area = max(largest_area, width * height)
 
 print('Result (part 2):', largest_area)
