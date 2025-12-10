@@ -32,6 +32,8 @@ for x in y_values_per_x:
 for y in x_values_per_y:
     x_values_per_y[y] = sorted(x_values_per_y[y])
 
+red_tiles = set(tiles)
+
 def is_red_or_green(tile):
     is_before_first_x = tile[0] < x_values_per_y[tile[1]][0]
     is_after_last_x = tile[0] > x_values_per_y[tile[1]][-1]
@@ -60,7 +62,7 @@ def is_red_or_green(tile):
             if tile[0] > x_values_per_y[y][0] and tile[0] < x_values_per_y[y][-1]:
                 true_conds += 1
 
-    return true_conds >= 2
+    return true_conds == 4
 
 largest_area = 0
 for i, tile1 in enumerate(tiles):
