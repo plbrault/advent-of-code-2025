@@ -24,3 +24,6 @@ for row in tiles_per_row:
     tiles_per_row[row] = sorted(tiles_per_row[row], key=lambda tile: tile[0])
 for col in tiles_per_col:
     tiles_per_col[col] = sorted(tiles_per_col[col], key=lambda tile: tile[1])
+
+rows = sorted(list(tiles_per_row.keys()))
+cols = sorted(list(tiles_per_col.keys()))
