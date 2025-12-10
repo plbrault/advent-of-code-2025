@@ -52,6 +52,8 @@ for i, tile1 in enumerate(tiles):
 
         width = abs(x2 - x1) + 1
         height = abs(y2 - y1) + 1
+        if width * height == 50:
+            print(tile1, tile2, tile1_2, tile2_1, x_values[0], x_values[-1], y_values[0], y_values[-1])
         largest_area = max(largest_area, width * height)
 
 print('Result (part 2):', largest_area)
