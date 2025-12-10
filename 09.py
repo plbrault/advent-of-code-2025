@@ -67,7 +67,7 @@ def is_red_or_green(tile):
             if tile[0] >= x_values_per_y[y][0] and tile[0] <= x_values_per_y[y][-1]:
                 d = True
 
-    return a and b and c and d
+    return (a and b) or (c and d)
 
 largest_area = 0
 for i, tile1 in enumerate(tiles):
