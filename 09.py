@@ -31,21 +31,30 @@ y_values = sorted(list(tiles_per_y.keys()))
 largest_area = 0
 for i, tile1 in enumerate(tiles):
     for tile2 in tiles[i + 1:]:
-        tile1_x, tile1_y = tile1
-        tile2_x, tile2_y = tile2
+        x1, y1 = tile1
+        x2, y2 = tile2
+
+        tile1_2 = (x1, y2)
+        tile2_1 = (x2, y1)
 
         if (
-            ((x_values[0] == tile1_x or x_values[-1] == tile1_x)
-                and (y_values[0] == tile2_y or y_values[-1] == tile2_y))
-            or
-            ((x_values[0]) == tile2_x or x_values[-1] == tile2_x)
-                and (y_values[0] == tile1_y or y_values[-1] == tile1_y)
+            (tile1_2[0] < x_values[0] or tile1_2[0] > x_values[-1])
+            and
+            (tile1_2[1] < y_values[0] or tile1_2[0] > x_values[-1])
+        ):
+            continue
+        if (
+            (tile2_1[0] < x_values[0] or tile2_1[0] > x_values[-1])
+            and
+            (tile2_1[1] < y_values[0] or tile2_1[0] > x_values[-1])
         ):
             continue
 
-        width = abs(tile2_x - tile1_x) + 1
-        height = abs(tile2_y - tile1_y) + 1
-        print(tile1, tile2, width, height, width * height)
+        width = abs(x2 - x1) + 1
+        height = abs(y2 - y1) + 1
+        if width * height == 50:
+            print(tile1, tile2, tile1_2, tile2_1, 
+            x_values[-1])
         largest_area = max(largest_area, width * height)
 
 print('Result (part 2):', largest_area)
