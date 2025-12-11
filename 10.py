@@ -61,9 +61,10 @@ def solve_part_2():
             for counter in button:
                 A[counter][button_id] = 1
 
-        x = [Int(f'button_{i}') for i in range(len(buttons))]
-        for button in x:
-            solver.add(button >= 0)
+        x = IntVector('x', len(buttons))
+        # Add a constraint for each value of x to be non-negative
+        for x_value in x:
+            solver.add(x_value >= 0)
 
         b = joltages
 
