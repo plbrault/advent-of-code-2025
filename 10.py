@@ -14,24 +14,27 @@ def parse_file(filename):
 
 machines = parse_file('input.txt')
 
-def start_machine(machine):
-    diagram, buttons = machine
+def solve_part_1():
+    def start_machine(machine):
+        diagram, buttons = machine
 
-    min_num_presses = float('inf')
-    for i in range(2 ** len(buttons)):
-        button_states = [bool(int(bit)) for bit in bin(i)[2:].zfill(len(buttons))]
-        pressed_buttons = [button for button_id, button
-            in enumerate(buttons) if button_states[button_id]]
+        min_num_presses = float('inf')
+        for i in range(2 ** len(buttons)):
+            button_states = [bool(int(bit)) for bit in bin(i)[2:].zfill(len(buttons))]
+            pressed_buttons = [button for button_id, button
+                in enumerate(buttons) if button_states[button_id]]
 
-        light_states = [False for _ in range(len(diagram))]
-        for pressed_button in pressed_buttons:
-            for light in list(pressed_button):
-                light_states[light] = not light_states[light]
+            light_states = [False for _ in range(len(diagram))]
+            for pressed_button in pressed_buttons:
+                for light in list(pressed_button):
+                    light_states[light] = not light_states[light]
 
-        if light_states == diagram:
-            min_num_presses = min(min_num_presses,
-                len([state for state in button_states if state is True]))
+            if light_states == diagram:
+                min_num_presses = min(min_num_presses,
+                    len([state for state in button_states if state is True]))
 
-    return min_num_presses
+        return min_num_presses
 
-print('Result (part 1):', sum([start_machine(machine) for machine in machines]))
+    print('Result (part 1):', sum([start_machine(machine) for machine in machines]))
+
+solve_part_1()
