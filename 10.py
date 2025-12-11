@@ -1,3 +1,5 @@
+from z3 import *
+
 def parse_file(filename):
     file_lines = open(filename).readlines()
     machines = []
