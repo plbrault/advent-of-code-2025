@@ -3,7 +3,7 @@ def parse_file(filename):
     machines = []
     for line in file_lines:
         light_diagram = [character == '#'
-            for character in line[:line.index(']')].replace('[','').replace(']','')]
+            for character in line[1:line.index(']')]]
         buttons = [
             eval(button) for button
                 in line[line.index(']') + 1 : line.index('{') - 1]
