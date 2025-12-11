@@ -6,7 +6,7 @@ def parse_file(filename):
             for character in line[:line.index(']')].replace('[','').replace(']','')]
         buttons = [
             eval(button) for button
-                in line[line.index(']') + 1 : line.index('{') - 1].split(' ') if button != ''
+                in line[line.index(']') + 1 : line.index('{') - 1].replace('(','[').replace(')',']').split(' ') if button != ''
         ]
         machines.append((light_diagram, buttons))
     return machines
@@ -15,9 +15,21 @@ machines = parse_file('input.txt')
 
 def start_machine(machine):
     diagram, buttons = machine
-    min_num_presses = 0
+    
+    min_num_presses = float('inf')
     for i in range(len(buttons) ** 2):
         button_states = [bool(int(bit)) for bit in bin(i)[2:].zfill(len(buttons))]
-        pressed_buttons = [button for button_id, button in enumerate(buttons) if button_states[button_id]]
+        pressed_buttons = [button for button_id, button
+            in enumerate(buttons) if button_states[button_id]]
 
-start_machine(machines[0])
+        light_states = [False for _ in range(len(diagram))]
+        for pressed_button in pressed_buttons:
+            for light in list(pressed_button):
+                light_states[light] = not light_states[light]
+
+        if tuple(light_states) == tuple(diagram):
+            min_num_presses = min(min_num_presses, len([state for state in light_states if state is True]))
+
+    return min_num_presses
+
+print(start_machine(machines[0]))
