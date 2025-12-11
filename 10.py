@@ -16,7 +16,7 @@ machines = parse_file('input.txt')
 
 def start_machine(machine):
     diagram, buttons = machine
-  
+
     min_num_presses = float('inf')
     for i in range(2 ** len(buttons)):
         button_states = [bool(int(bit)) for bit in bin(i)[2:].zfill(len(buttons))]
@@ -30,7 +30,7 @@ def start_machine(machine):
 
         if light_states == diagram:
             min_num_presses = min(min_num_presses,
-                len([state for state in light_states if state is True]))
+                len([state for state in button_states if state is True]))
 
     return min_num_presses
 
