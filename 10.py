@@ -34,4 +34,4 @@ def start_machine(machine):
 
     return min_num_presses
 
-print(start_machine(machines[0]))
+print('Result (part 1):', sum([start_machine(machine) for machine in machines]))
