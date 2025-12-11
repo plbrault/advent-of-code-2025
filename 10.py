@@ -47,14 +47,34 @@ def solve_part_2():
     def start_machine(machine):
         _, buttons, joltages = machine
 
-        min_num_presses = float('inf')
+        # I want to solve A * x = b, where:
+        #    - A is a matrix of button effects
+        #        - Each row is a counter
+        #        - Each column is a button
+        #    - x is the vector of numbers of button presses
+        #    - b is the vector of desired counter values (the `joltages` array)
 
-        button_effect_matrix = [[0 for _ in buttons] for _ in joltages]
+        solver = Solver()
+
+        A = [[0 for _ in buttons] for _ in joltages]
         for button_id, button in enumerate(buttons):
             for counter in button:
-                button_effect_matrix[counter][button_id] = 1
+                A[counter][button_id] = 1
 
-        return min_num_presses
+        x = [Int(f'button_{i}') for i in range(len(buttons))]
+        for button in x:
+            solver.add(button >= 0)
+
+        b = joltages
+
+        for i in range(len(b)):
+            solver.add(Sum(A[i][j] * x[j] for j in range(len(x))) == b[i])
+
+        if solver.check() == sat:
+            model = solver.model()
+            solution = [model.evaluate(button) for button in x]
+            return sum([presses.as_long() for presses in solution])
+        return float('inf')
 
     print('Result (part 2):', sum([start_machine(machine) for machine in machines]))
 
