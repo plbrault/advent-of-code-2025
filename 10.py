@@ -18,7 +18,7 @@ def start_machine(machine):
     diagram, buttons = machine
   
     min_num_presses = float('inf')
-    for i in range(len(buttons) ** 2):
+    for i in range(2 ** len(buttons)):
         button_states = [bool(int(bit)) for bit in bin(i)[2:].zfill(len(buttons))]
         pressed_buttons = [button for button_id, button
             in enumerate(buttons) if button_states[button_id]]
