@@ -1,4 +1,5 @@
 from shapely.geometry import Polygon
+
 tiles = [tuple([int(value) for value in line.split(',')]) for line in open('input.txt').readlines()]
 
 rectangles = []
