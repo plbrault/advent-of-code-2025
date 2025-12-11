@@ -54,7 +54,7 @@ def solve_part_2():
         #    - x is the vector of numbers of button presses
         #    - b is the vector of desired counter values (the `joltages` array)
 
-        solver = Solver()
+        solver = Optimize()
 
         A = [[0 for _ in buttons] for _ in joltages]
         for button_id, button in enumerate(buttons):
@@ -69,6 +69,7 @@ def solve_part_2():
 
         for i in range(len(b)):
             solver.add(Sum(A[i][j] * x[j] for j in range(len(x))) == b[i])
+        solver.minimize(Sum(x))
 
         if solver.check() == sat:
             model = solver.model()
