@@ -9,13 +9,17 @@ def parse_file(filename):
                 in line[line.index(']') + 1 : line.index('{') - 1]
                     .replace('(','[').replace(')',']').split(' ') if button != ''
         ]
-        machines.append((light_diagram, buttons))
+        joltages = [
+            int(value)
+            for value in line[line.index('{') + 1 : line.index('}')].split(',')
+        ]
+        machines.append((light_diagram, buttons, joltages))
     return machines
 
 machines = parse_file('input.txt')
 
 def start_machine(machine):
-    diagram, buttons = machine
+    diagram, buttons, joltages = machine
 
     min_num_presses = float('inf')
     for i in range(2 ** len(buttons)):
