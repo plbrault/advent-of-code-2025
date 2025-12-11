@@ -11,4 +11,13 @@ def parse_file(filename):
         machines.append((light_diagram, buttons))
     return machines
 
-print(parse_file('input.txt'))
+machines = parse_file('input.txt')
+
+def start_machine(machine):
+    diagram, buttons = machine
+    min_num_presses = 0
+    for i in range(len(buttons) ** 2):
+        button_states = [bool(int(bit)) for bit in bin(i)[2:].zfill(len(buttons))]
+        print(button_states)
+
+start_machine(machines[0])
