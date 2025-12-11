@@ -53,6 +53,8 @@ def solve_part_2():
         #        - Each column is a button
         #    - x is the vector of numbers of button presses
         #    - b is the vector of desired counter values (the `joltages` array)
+        #
+        # I am looking for the solution that provides the smallest value for the sum of x.
 
         solver = Optimize()
 
@@ -62,19 +64,25 @@ def solve_part_2():
                 A[counter][button_id] = 1
 
         x = IntVector('x', len(buttons))
-        # Add a constraint for each value of x to be non-negative
-        for x_value in x:
-            solver.add(x_value >= 0)
 
         b = joltages
 
-        for i in range(len(b)):
-            solver.add(Sum(A[i][j] * x[j] for j in range(len(x))) == b[i])
+        # Add the constraint that each value of x should be non-negative
+        for x_value in x:
+            solver.add(x_value >= 0)
+
+        # Add the constraint that A * x should equal b
+        for i, _ in enumerate(b):
+            solver.add(Sum(A[i][j] * x[j] for j, _ in enumerate(x)) == b[i])
+
+        # Specify to search for the solution with the smallest sum of x
         solver.minimize(Sum(x))
 
+        # If there is a possible solution
         if solver.check() == sat:
-            model = solver.model()
-            solution = [model.evaluate(button) for button in x]
+            # Get the values of x
+            solution = [solver.model().evaluate(x_value) for x_value in x]
+            # Return the sum of x
             return sum([presses.as_long() for presses in solution])
         return float('inf')
 
