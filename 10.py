@@ -21,8 +21,7 @@ machines = parse_file('input.txt')
 def start_machine(machine):
     diagram, buttons, joltages = machine
 
-    min_num_presses_lights = float('inf')
-    min_num_presses_joltages = float('inf')
+    min_num_presses = float('inf')
     for i in range(2 ** len(buttons)):
         button_states = [bool(int(bit)) for bit in bin(i)[2:].zfill(len(buttons))]
         pressed_buttons = [button for button_id, button
@@ -34,11 +33,9 @@ def start_machine(machine):
                 light_states[light] = not light_states[light]
 
         if light_states == diagram:
-            min_num_presses_lights = min(min_num_presses_lights,
+            min_num_presses = min(min_num_presses,
                 len([state for state in button_states if state is True]))
 
-    return min_num_presses_lights, min_num_presses_joltages
+    return min_num_presses
 
-results = [start_machine(machine) for machine in machines]
-print('Result (part 1):', sum([result[0] for result in results]))
-print('Result (part 2):', sum([result[1] for result in results]))
+print('Result (part 1):', sum([start_machine(machine) for machine in machines]))
