@@ -18,6 +18,6 @@ def start_machine(machine):
     min_num_presses = 0
     for i in range(len(buttons) ** 2):
         button_states = [bool(int(bit)) for bit in bin(i)[2:].zfill(len(buttons))]
-        print(button_states)
+        pressed_buttons = [button for button_id, button in enumerate(buttons) if button_states[button_id]]
 
 start_machine(machines[0])
