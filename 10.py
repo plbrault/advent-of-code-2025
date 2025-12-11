@@ -6,7 +6,8 @@ def parse_file(filename):
             for character in line[:line.index(']')].replace('[','').replace(']','')]
         buttons = [
             eval(button) for button
-                in line[line.index(']') + 1 : line.index('{') - 1].replace('(','[').replace(')',']').split(' ') if button != ''
+                in line[line.index(']') + 1 : line.index('{') - 1]
+                    .replace('(','[').replace(')',']').split(' ') if button != ''
         ]
         machines.append((light_diagram, buttons))
     return machines
@@ -27,8 +28,9 @@ def start_machine(machine):
             for light in list(pressed_button):
                 light_states[light] = not light_states[light]
 
-        if tuple(light_states) == tuple(diagram):
-            min_num_presses = min(min_num_presses, len([state for state in light_states if state is True]))
+        if light_states == diagram:
+            min_num_presses = min(min_num_presses,
+                len([state for state in light_states if state is True]))
 
     return min_num_presses
 
