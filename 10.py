@@ -48,12 +48,11 @@ def solve_part_2():
         _, buttons, joltages = machine
 
         min_num_presses = float('inf')
-        for i in range(2 ** len(buttons)):
-            button_states = [bool(int(bit)) for bit in bin(i)[2:].zfill(len(buttons))]
-            pressed_buttons = [button for button_id, button
-                in enumerate(buttons) if button_states[button_id]]
 
-            pass
+        button_effect_matrix = [[0 for _ in buttons] for _ in joltages]
+        for button_id, button in enumerate(buttons):
+            for counter in button:
+                button_effect_matrix[counter][button_id] = 1
 
         return min_num_presses
 
