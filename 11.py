@@ -6,8 +6,7 @@ for line in open('input.txt').readlines():
 
 memo = {}
 
-def find_paths(start, end, *, must_contain=[]):
-    print(start)
+def find_paths(start, end):
     if (start, end) in memo:
         return memo[(start, end)]
 
@@ -18,19 +17,11 @@ def find_paths(start, end, *, must_contain=[]):
         if neighbour == end:
             paths.append([start, end])
         else:
-            new_paths = [([start] + path) for path in find_paths(neighbour, end)]
-            for path in new_paths:
-                is_valid = True
-                for node in must_contain:
-                    if node not in path:
-                        is_valid = False
-                        break
-                if is_valid:
-                    paths.append(path)
+            paths += [([start] + path) for path in find_paths(neighbour, end)]
 
     memo[(start, end)] = paths
     return paths
 
 print('Result (part 1):', len(find_paths('you', 'out')))
 
-print(len(find_paths('svr', 'out', must_contain=['dac', 'fft'])))
+print(len(find_paths('svr', 'out')))
