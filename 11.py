@@ -6,6 +6,8 @@ for line in open('input.txt').readlines():
 
 def find_paths(start, end):
     paths = []
+    if start not in graph:
+        return paths
     for neighbour in graph[start]:
         if neighbour == end:
             paths.append([start, end])
