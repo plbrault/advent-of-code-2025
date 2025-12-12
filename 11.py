@@ -5,12 +5,12 @@ for line in open('input.txt').readlines():
     graph[node] = neighbours
 
 def find_paths(start, end):
-    num_paths = 0
+    paths = []
     for neighbour in graph[start]:
         if neighbour == end:
-            return 1
+            paths.append([start, end])
         else:
-            num_paths += find_paths(neighbour, end)
-    return num_paths
+            paths += [([start] + path) for path in find_paths(neighbour, end)]
+    return paths
 
-print('Result (part 1):', find_paths('you', 'out'))
+print('Result (part 1):', len(find_paths('you', 'out')))
