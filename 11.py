@@ -4,16 +4,13 @@ for line in open('input.txt').readlines():
     neighbours = neighbours_str.split(' ')
     graph[node] = neighbours
 
-def solve_part1():
-    def find_paths_to_out(node):
-        num_paths_to_out = 0
-        for neighbour in graph[node]:
-            if neighbour == 'out':
-                return 1
-            else:
-                num_paths_to_out += find_paths_to_out(neighbour)
-        return num_paths_to_out
-    
-    print('Result (part 1):', find_paths_to_out('you'))
+def find_paths(start, end):
+    num_paths = 0
+    for neighbour in graph[start]:
+        if neighbour == end:
+            return 1
+        else:
+            num_paths += find_paths(neighbour, end)
+    return num_paths
 
-solve_part1()
+print('Result (part 1):', find_paths('you', 'out'))
