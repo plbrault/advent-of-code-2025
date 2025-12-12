@@ -8,6 +8,8 @@ def find_paths(start, end, visited_nodes=set()):
     if not visited_nodes:
         visited_nodes = {start}
     num_paths = 0
+    if start not in graph:
+        return num_paths
     for neighbour in graph[start]:
         if neighbour in visited_nodes:
             continue
