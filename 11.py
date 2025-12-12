@@ -27,3 +27,16 @@ def find_paths(start, end, visited_nodes=None):
     return num_paths
 
 print('Result (part 1):', find_paths('you', 'out'))
+
+fft_to_out = find_paths('fft', 'out')
+dac_to_out = find_paths('dac', 'out')
+
+dac_to_fft = find_paths('dac', 'fft')
+fft_to_dac = find_paths('fft', 'dac')
+
+svr_to_fft = find_paths('svr', 'fft')
+svr_to_dac = find_paths('svr', 'dac')
+
+result_part2 = (svr_to_dac * dac_to_fft * fft_to_out) + (svr_to_fft * fft_to_dac * dac_to_out)
+
+print('Result (part 2):', result_part2)
