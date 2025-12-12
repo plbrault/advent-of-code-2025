@@ -8,7 +8,7 @@ def find_paths(start, end):
     num_paths = 0
     for neighbour in graph[start]:
         if neighbour == end:
-            return 1
+            num_paths += 1
         else:
             num_paths += find_paths(neighbour, end)
     return num_paths
