@@ -6,7 +6,7 @@ for line in open('input.txt').readlines():
 
 memo = {}
 
-def find_paths(start, end, visited_nodes=set()):
+def find_paths(start, end, visited_nodes=None):
     if (start, end) in memo:
         return memo[(start, end)]
 
