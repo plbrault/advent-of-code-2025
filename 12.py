@@ -49,3 +49,6 @@ for region in regions:
 print('Solvable regions:', len(solvable))
 print('Unsolvable regions:', len(unsolvable))
 print('Unknown:', len(unknown))
+
+if len(unknown) == 0:
+    print('Result (part 1):', len(solvable))
